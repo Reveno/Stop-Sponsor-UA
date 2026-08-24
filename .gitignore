@@ -18,3 +18,7 @@ tools/*.log
 
 # data/brands.json is intentionally NOT excluded — it's the bundled
 # offline-fallback dataset the extension ships with, not build output.
+
+# Chrome Web Store submission zip — a generated build artifact, rebuilt
+# from source on demand, not something to track in history.
+*.zip
