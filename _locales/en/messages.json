@@ -1,6 +1,6 @@
 {
   "extName": { "message": "Stop Sponsor: War Sponsor Checker" },
-  "extDescription": { "message": "Flags products from companies that continue funding Russia's war against Ukraine, sourced from KSE Institute's Leave-Russia database." },
+  "extDescription": { "message": "Highlights war sponsor brands on Rozetka, Silpo, and Instagram to help you shop consciously." },
   "badgeLabel": { "message": "War Sponsor" },
   "badgeAriaLabel": { "message": "Warning: this brand's parent company is linked to funding the war" },
   "badgeLabelLeft": { "message": "Left Russia" },
