@@ -7,10 +7,8 @@ const REMOTE_URL_KEY = 'remoteDbUrl';
 const CACHE_KEY = 'brandDbCache';
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-// TODO: point this at your published stop-sponsor repo, e.g.
-// "https://raw.githubusercontent.com/<user>/stop-sponsor/main/brands.json"
 const DEFAULT_REMOTE_URL =
-  'https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/stop-sponsor/main/brands.json';
+  'https://raw.githubusercontent.com/Reveno/Stop-Sponsor-UA/main/data/brands.json';
 
 async function loadLocalFallback() {
   const res = await fetch(chrome.runtime.getURL('data/brands.json'));

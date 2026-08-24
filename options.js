@@ -8,7 +8,7 @@ const DEFAULT_SETTINGS = {
   domainList: []
 };
 
-const REPORT_REPO_URL = 'https://github.com/YOUR_GITHUB_USERNAME/stop-sponsor';
+const REPORT_REPO_URL = 'https://github.com/Reveno/Stop-Sponsor-UA';
 
 const sidebarNav = document.getElementById('sidebarNav');
 const panels = document.querySelectorAll('.panel');

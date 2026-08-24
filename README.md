@@ -31,12 +31,16 @@ pre-release dev install like this one, not a real user base.)
 The extension ships with a bundled `data/brands.json` as an offline
 fallback, but is designed to pull a live-editable copy from a GitHub repo
 (raw file) so the data can be updated without republishing the extension.
+This build already points at
+[github.com/Reveno/Stop-Sponsor-UA](https://github.com/Reveno/Stop-Sponsor-UA)
+(`background.js`'s `DEFAULT_REMOTE_URL`, verified live — a fetch against it
+returns real data, not a 404) — to point it at a different repo instead:
 
-1. Create a public repo (e.g. `stop-sponsor`) and push `data/brands.json`
-   to it (see the file's `brands` / `corporations` shape).
-2. In both [`background.js`](background.js) and [`popup.js`](popup.js),
-   replace the `YOUR_GITHUB_USERNAME` placeholder in the raw-content /
-   issues URLs with your actual GitHub username and repo name.
+1. Push `data/brands.json` to your own repo (see the file's `brands` /
+   `corporations` shape).
+2. In [`background.js`](background.js), [`popup.js`](popup.js), and
+   [`options.js`](options.js), update `DEFAULT_REMOTE_URL`/
+   `REPORT_REPO_URL` to your own GitHub username and repo name.
 3. Reload the extension. The background worker fetches the remote JSON,
    caches it in `chrome.storage.local` for 24h, and falls back to the
    bundled copy (or a stale cache) if the fetch fails.
@@ -408,20 +412,12 @@ silhouette, recognizable by shape alone even at 16px where actual text or
 a letterform would turn to mud. Generated programmatically
 (`System.Drawing`, no external asset).
 
-## Publishing this to your own GitHub repo
+## GitHub repo
 
-This repo is set up (`.gitignore`, an initial commit) but has no remote —
-`git init`/`add`/`commit` were run locally; pushing anywhere is a
-deliberate step you take yourself, not something done for you. To link
-it:
-
-```bash
-git remote add origin https://github.com/<your-username>/stop-sponsor.git
-git branch -M main
-git push -u origin main
-```
-
-Then follow **"Point it at your GitHub database"** above to swap the
-`YOUR_GITHUB_USERNAME` placeholders in `background.js`/`popup.js`/
-`options.js` for your real username/repo, so the extension pulls live
-updates from it instead of only ever using the bundled offline copy.
+Published at
+[github.com/Reveno/Stop-Sponsor-UA](https://github.com/Reveno/Stop-Sponsor-UA)
+(`main` branch). `background.js`/`popup.js`/`options.js` already point at
+it — `DEFAULT_REMOTE_URL` and `REPORT_REPO_URL` are real, verified-live
+URLs, not placeholders. To fork this to a different repo instead, update
+those three constants and push there — see "Point it at your GitHub
+database" above.
