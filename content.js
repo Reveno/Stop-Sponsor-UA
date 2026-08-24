@@ -1,4 +1,4 @@
-// Spysok — content script
+// Stop Sponsor — content script
 //
 // Universal detection engine. Priority order per scan:
 //   0. Site adapter card scan   — "high precision" override for grid/listing
@@ -864,7 +864,7 @@
       brandIndex = buildBrandIndex(db.brands);
       stylesCssText = css;
     } catch (err) {
-      console.error('[Spysok] Failed to load brand database', err);
+      console.error('[StopSponsor] Failed to load brand database', err);
       return;
     }
 

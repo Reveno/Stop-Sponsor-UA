@@ -1,4 +1,4 @@
-// Spysok — options page (dashboard sidebar layout)
+// Stop Sponsor — options page (dashboard sidebar layout)
 
 const DEFAULT_SETTINGS = {
   theme: 'system',
@@ -8,7 +8,7 @@ const DEFAULT_SETTINGS = {
   domainList: []
 };
 
-const REPORT_REPO_URL = 'https://github.com/YOUR_GITHUB_USERNAME/spysok';
+const REPORT_REPO_URL = 'https://github.com/YOUR_GITHUB_USERNAME/stop-sponsor';
 
 const sidebarNav = document.getElementById('sidebarNav');
 const panels = document.querySelectorAll('.panel');

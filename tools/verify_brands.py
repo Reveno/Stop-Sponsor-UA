@@ -54,7 +54,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 BRANDS_JSON_PATH = REPO_ROOT / "data" / "brands.json"
 KSE_COMPANIES_PATH = REPO_ROOT / "tools" / "kse_companies.json"
 SOURCE_BASE = "https://leave-russia.org"
-USER_AGENT = "spysok/1.0 (+https://github.com/YOUR_GITHUB_USERNAME/spysok)"
+USER_AGENT = "stop-sponsor/1.0 (+https://github.com/YOUR_GITHUB_USERNAME/stop-sponsor)"
 REQUEST_DELAY_SECONDS = 1.0
 
 # The three top-level category listings that between them cover every

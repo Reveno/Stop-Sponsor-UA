@@ -61,7 +61,7 @@ from verify_brands import (  # noqa: E402
 
 WIKIDATA_API = "https://www.wikidata.org/w/api.php"
 OFF_SEARCH_API = "https://search.openfoodfacts.org/search"
-USER_AGENT = "spysok/1.0 (+https://github.com/YOUR_GITHUB_USERNAME/spysok)"
+USER_AGENT = "stop-sponsor/1.0 (+https://github.com/YOUR_GITHUB_USERNAME/stop-sponsor)"
 REQUEST_DELAY_SECONDS = 1.0
 
 # Wikidata "instance of" (P31) values that represent an actual consumer

@@ -1,7 +1,7 @@
-// Spysok — popup UI logic
+// Stop Sponsor — popup UI logic
 
-// TODO: point this at your published spysok repo.
-const REPORT_REPO_URL = 'https://github.com/YOUR_GITHUB_USERNAME/spysok';
+// TODO: point this at your published stop-sponsor repo.
+const REPORT_REPO_URL = 'https://github.com/YOUR_GITHUB_USERNAME/stop-sponsor';
 const MISSING_BRAND_TEMPLATE = 'missing-brand.yml';
 
 const dbStatusEl = document.getElementById('dbStatus');

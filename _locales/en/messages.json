@@ -1,5 +1,5 @@
 {
-  "extName": { "message": "Spysok: War Sponsor Checker" },
+  "extName": { "message": "Stop Sponsor: War Sponsor Checker" },
   "extDescription": { "message": "Flags products from companies that continue funding Russia's war against Ukraine, sourced from KSE Institute's Leave-Russia database." },
   "badgeLabel": { "message": "War Sponsor" },
   "badgeAriaLabel": { "message": "Warning: this brand's parent company is linked to funding the war" },
@@ -24,7 +24,7 @@
   "statusLocal": { "message": "Local fallback" },
   "settingsButton": { "message": "Settings" },
 
-  "optionsTitle": { "message": "Spysok — Settings" },
+  "optionsTitle": { "message": "Stop Sponsor — Settings" },
   "optionsSubtitle": { "message": "All matching happens locally on your device. Nothing you browse is ever sent anywhere." },
 
   "navGeneral": { "message": "General" },
@@ -111,5 +111,5 @@
 
   "saveButton": { "message": "Save" },
   "savedNotice": { "message": "Saved" },
-  "privacyNote": { "message": "Spysok does not collect, transmit, or store any of your browsing activity. Brand matching runs entirely in your browser; the only network request is fetching the public brand database itself." }
+  "privacyNote": { "message": "Stop Sponsor does not collect, transmit, or store any of your browsing activity. Brand matching runs entirely in your browser; the only network request is fetching the public brand database itself." }
 }

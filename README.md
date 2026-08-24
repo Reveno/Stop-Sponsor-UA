@@ -1,23 +1,24 @@
-# Spysok
+# Stop Sponsor
 
 Chrome extension (Manifest V3) that flags products from companies that
 continue funding Russia's war against Ukraine, sourced from the
 [KSE Institute's #LeaveRussia project](https://leave-russia.org). All
 matching runs locally in the browser — no browsing data is ever collected
 or transmitted; the only network request is fetching the public brand
-database itself. "Spysok" (список) is Ukrainian for "list" — the name is
-literal: this is a list of companies still funding the war.
+database itself.
 
 (Formerly "Stop Funding War", then "Varta: War Sponsor Checker", then
-"Corporate Watch Monitor", then "Impact Monitor". The internal `im`
-prefix on CSS classes/storage keys — `imSettings`, `im-badge`, etc. — is
-left as-is from that round rather than renamed again to `spysok`: it's
-genuinely internal, invisible to a user, and a mechanical rename across
-every selector in `content.js`/`styles.css`/`options.css` carries real
-risk of a missed spot for no user-facing benefit. Earlier installs'
-settings under `sfwSettings` still won't carry over to `imSettings` —
-only matters for a pre-release dev install like this one, not a real
-user base.)
+"Corporate Watch Monitor", then "Impact Monitor", then "Spysok" —
+"список" is Ukrainian for "list", which was a fitting name for a list of
+war-sponsoring companies, but this round's brief asked for something more
+directly action-oriented. The internal `im` prefix on CSS classes/storage
+keys — `imSettings`, `im-badge`, etc. — is still left as-is through all
+of these renames: it's genuinely internal, invisible to a user, and a
+mechanical rename across every selector in
+`content.js`/`styles.css`/`options.css` carries real risk of a missed
+spot for no user-facing benefit. Earlier installs' settings under
+`sfwSettings` still won't carry over to `imSettings` — only matters for a
+pre-release dev install like this one, not a real user base.)
 
 ## Load it (unpacked)
 
@@ -31,7 +32,7 @@ The extension ships with a bundled `data/brands.json` as an offline
 fallback, but is designed to pull a live-editable copy from a GitHub repo
 (raw file) so the data can be updated without republishing the extension.
 
-1. Create a public repo (e.g. `spysok`) and push `data/brands.json`
+1. Create a public repo (e.g. `stop-sponsor`) and push `data/brands.json`
    to it (see the file's `brands` / `corporations` shape).
 2. In both [`background.js`](background.js) and [`popup.js`](popup.js),
    replace the `YOUR_GITHUB_USERNAME` placeholder in the raw-content /
@@ -182,11 +183,23 @@ Russia isn't "active" anything, even if it was historically listed
 (Unilever is the concrete case — NACP-listed in 2023, but KSE now shows it
 fully exited).
 
-As of this writing: 83 corporations, 469 brand mappings, still actively
+As of this writing: 95 corporations, 522 brand mappings, still actively
 growing via a background `--from-kse-file` run against the full ~3,150-
 company KSE list (see below) — check `data/brands.json`'s own `updatedAt`
 for the current count, since this number will be stale by the time you
 read it.
+
+**On Wikidata coverage gaps**: `find_subbrands()` only surfaces what
+Wikidata's `P127` ("owned by") claims actually record, and that coverage
+is uneven — re-running it against companies already processed in earlier
+sessions mostly turned up nothing *new*, not because those companies lack
+real sub-brands, but because Wikidata itself doesn't have the claim.
+Henkel is the clean example: its Wikidata entity (`Q1605280`, confirmed
+correct) has zero `P127` relationships at all, despite Persil and
+Schwarzkopf being unambiguously real Henkel brands. That's a genuine gap
+in the source data, not a bug in this pipeline — and it's treated as a
+gap to disclose, not a reason to hand-type the missing brands without a
+source.
 
 ### Russian-origin companies ("direct sponsors")
 
@@ -207,13 +220,29 @@ candidate (Splat-Cosmetica) asserting it directly funds Russian military
 units and war crimes. That's a specific, serious factual claim, and nothing
 findable substantiates it — so it isn't in the data. What *is* verified
 (Wikidata `Q4048866`, country: Russia) is written instead, same as the
-other three candidates in `RUSSIAN_ORIGIN_CANDIDATES`
-(Splat-Cosmetica, Kaspersky Lab, Faberlic, Melon Fashion Group). The
-Catalog/badge UI shows this as a separate "🇷🇺 Russian-origin company"
-badge (dashed border) rather than folding it into the NACP-sourced
-"📢 Active propaganda" badge — the two are different designations with
-different evidence behind them, and conflating them would misrepresent
-both.
+other four current Russian-origin corps: Kaspersky Lab, Faberlic, Melon
+Fashion Group, Greenfield, MAY. The Catalog/badge UI shows this as a
+separate "🇷🇺 Russian-origin company" badge (dashed border) rather than
+folding it into the NACP-sourced "📢 Active propaganda" badge — the two
+are different designations with different evidence behind them, and
+conflating them would misrepresent both.
+
+Two of those (Greenfield, MAY) needed real reporting rather than
+Wikidata, and getting their actual corporate structure right mattered:
+**Greenfield** and **Tess**/**Jardin** are real Orimi Group tea/coffee
+brands (Orimi's own Wikidata entry has no country claim at all — a
+coverage gap, not counter-evidence — so this is sourced to independent
+reporting: Ukrainska Pravda names Orimi's owners, Sergey Kasyanenko and
+Alexander Yevnevich, both Russian). **Curtis** and **Richard**, despite
+sometimes being lumped in with Greenfield as "similar Russian tea
+brands", actually belong to a *different* Russian company — MAY
+(Maysky, Wikidata `Q25952`, verified Russian) — confirmed via MAY's own
+"About" page listing both as its brands. Conflating the two would have
+been wrong in a small but real way. One brand from the same rough
+category was deliberately **not** flagged: MacCoffee is a real brand,
+but its actual owner (Food Empire Holdings) is Singaporean — checked
+both via web search and Wikidata (`Q135020783`, no Russia country claim)
+before deciding not to add it here.
 
 ### `tools/verify_brands.py` — corporation status + figures
 
@@ -292,7 +321,7 @@ hours-long background job, not a one-shot command.
 ## Settings (`options.html`)
 
 Reachable from the popup's gear icon, or `chrome://extensions` →
-Spysok → Details → Extension options. Laid out as a
+Stop Sponsor → Details → Extension options. Laid out as a
 dashboard: a persistent sidebar (General / The Catalog / Data
 Transparency / How It Works / Site List) next to a scrollable content
 pane. Glassmorphism accents (`backdrop-filter: blur()` over soft
@@ -373,11 +402,11 @@ link click, not a request the extension initiates.
 
 ## Icon
 
-`icons/icon{16,48,128}.png` — a minimalist navy rounded square (`#0f172a`)
-with a crimson (`#b91c1c`) border ring and a bold crimson "S", generated
-programmatically (`System.Drawing`, no external asset). Same palette as
-the rest of the UI, deliberately plain at 16px where a detailed mark would
-just turn to mud.
+`icons/icon{16,48,128}.png` — a minimalist red (`#b91c1c`) octagon with a
+white border and a horizontal white bar through the center: a stop-sign
+silhouette, recognizable by shape alone even at 16px where actual text or
+a letterform would turn to mud. Generated programmatically
+(`System.Drawing`, no external asset).
 
 ## Publishing this to your own GitHub repo
 
@@ -387,7 +416,7 @@ deliberate step you take yourself, not something done for you. To link
 it:
 
 ```bash
-git remote add origin https://github.com/<your-username>/spysok.git
+git remote add origin https://github.com/<your-username>/stop-sponsor.git
 git branch -M main
 git push -u origin main
 ```

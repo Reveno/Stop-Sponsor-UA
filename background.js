@@ -1,4 +1,4 @@
-// Spysok — background service worker
+// Stop Sponsor — background service worker
 // Fetches the brand/corporation database from a remote GitHub-hosted JSON
 // file, caches it in chrome.storage.local for 24h, and falls back to the
 // bundled local copy (data/brands.json) if the remote fetch fails.
@@ -7,10 +7,10 @@ const REMOTE_URL_KEY = 'remoteDbUrl';
 const CACHE_KEY = 'brandDbCache';
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-// TODO: point this at your published spysok repo, e.g.
-// "https://raw.githubusercontent.com/<user>/spysok/main/brands.json"
+// TODO: point this at your published stop-sponsor repo, e.g.
+// "https://raw.githubusercontent.com/<user>/stop-sponsor/main/brands.json"
 const DEFAULT_REMOTE_URL =
-  'https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/spysok/main/brands.json';
+  'https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/stop-sponsor/main/brands.json';
 
 async function loadLocalFallback() {
   const res = await fetch(chrome.runtime.getURL('data/brands.json'));
@@ -86,7 +86,7 @@ async function getDb({ forceRefresh = false } = {}) {
     await chrome.storage.local.set({ [CACHE_KEY]: entry });
     return entry;
   } catch (err) {
-    console.warn('[Spysok] Remote DB unavailable, using fallback.', err);
+    console.warn('[StopSponsor] Remote DB unavailable, using fallback.', err);
     // Previously this unconditionally returned the stale cache here — but
     // a stale cache doesn't "beat nothing" when the bundled local copy is
     // actually newer, which is exactly the case while REMOTE_URL is a
@@ -118,5 +118,5 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 });
 
 chrome.runtime.onInstalled.addListener(() => {
-  getDb().catch((err) => console.error('[Spysok] initial DB load failed', err));
+  getDb().catch((err) => console.error('[StopSponsor] initial DB load failed', err));
 });
