@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Python bytecode cache (tools/*.py)
+__pycache__/
+*.pyc
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Local scratch/temp output from the data-pipeline scripts (tools/*.py) —
+# not the data itself, just working files that shouldn't be committed
+tools/*.log
+*.tmp
+
+# data/brands.json is intentionally NOT excluded — it's the bundled
+# offline-fallback dataset the extension ships with, not build output.

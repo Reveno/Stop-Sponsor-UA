@@ -1,0 +1,209 @@
+:root {
+  color-scheme: dark;
+  /* deep navy/charcoal (dark, default) */
+  --v-bg: #0f172a;
+  --v-surface: #1e293b;
+  --v-text: #f1f5f9;
+  --v-text-dim: #94a3b8;
+  --v-accent: #ef4444;
+  --v-accent-strong: #f87171;
+  --v-border: #334155;
+  --v-btn-bg-1: #1e293b;
+  --v-btn-bg-2: #0f172a;
+  --v-track-bg: #334155;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  /* clean off-white */
+  --v-bg: #f8fafc;
+  --v-surface: #ffffff;
+  --v-text: #1e293b;
+  --v-text-dim: #64748b;
+  --v-accent: #b91c1c;
+  --v-accent-strong: #991b1b;
+  --v-border: #e2e8f0;
+  --v-btn-bg-1: #ffffff;
+  --v-btn-bg-2: #f8fafc;
+  --v-track-bg: #e2e8f0;
+}
+
+@media (prefers-color-scheme: light) {
+  :root[data-theme='system'] {
+    color-scheme: light;
+    --v-bg: #f8fafc;
+    --v-surface: #ffffff;
+    --v-text: #1e293b;
+    --v-text-dim: #64748b;
+    --v-accent: #b91c1c;
+    --v-accent-strong: #991b1b;
+    --v-border: #e2e8f0;
+    --v-btn-bg-1: #ffffff;
+    --v-btn-bg-2: #f8fafc;
+    --v-track-bg: #e2e8f0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 300px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--v-bg);
+  color: var(--v-text);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.popup {
+  padding: 16px;
+}
+
+.popup__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.popup__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popup__logo {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.popup__header h1 {
+  font-size: 14px;
+  margin: 0;
+  color: var(--v-accent);
+  letter-spacing: 0.01em;
+}
+
+.popup__icon-btn {
+  background: transparent;
+  border: 1px solid var(--v-border);
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  color: var(--v-text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.popup__icon-btn:hover {
+  color: var(--v-text);
+  border-color: var(--v-accent);
+}
+
+.popup__status {
+  background: var(--v-surface);
+  border: 1px solid var(--v-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.popup__status p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0;
+  font-size: 12px;
+  color: var(--v-text-dim);
+}
+
+.popup__status strong {
+  color: var(--v-text);
+  text-align: right;
+}
+
+/* ---------- database sync indicator ---------- */
+
+.popup__sync {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--v-text-dim);
+}
+
+.popup__sync-track {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--v-track-bg);
+  overflow: hidden;
+}
+
+.popup__sync-bar {
+  height: 100%;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--v-accent), var(--v-accent-strong));
+  animation: popup-sync-slide 1.1s ease-in-out infinite;
+}
+
+@keyframes popup-sync-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+.popup__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0 12px;
+}
+
+.popup__actions button {
+  background: linear-gradient(135deg, var(--v-btn-bg-1), var(--v-btn-bg-2));
+  color: var(--v-accent-strong);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.popup__actions button:hover {
+  border-color: var(--v-accent-strong);
+  color: var(--v-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.popup__actions button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.popup__footer {
+  border-top: 1px solid var(--v-border);
+  padding-top: 10px;
+  text-align: center;
+}
+
+.popup__footer a {
+  color: var(--v-accent-strong);
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.popup__footer a:hover {
+  text-decoration: underline;
+}

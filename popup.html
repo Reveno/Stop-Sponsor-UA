@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<title>Spysok</title>
+<link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup">
+    <header class="popup__header">
+      <div class="popup__brand">
+        <img src="icons/icon48.png" alt="" class="popup__logo" />
+        <h1 data-i18n="extName">Spysok</h1>
+      </div>
+      <button id="settingsBtn" type="button" class="popup__icon-btn" data-i18n-title="settingsButton" title="Settings" aria-label="Settings">⚙</button>
+    </header>
+
+    <section class="popup__status">
+      <p><span data-i18n="dbStatusLabel">Database status</span><strong id="dbStatus">—</strong></p>
+      <p><span data-i18n="dbBrandsLabel">Brands tracked</span><strong id="dbBrandsCount">—</strong></p>
+      <p><span data-i18n="dbUpdatedLabel">Last updated</span><strong id="dbUpdated">—</strong></p>
+    </section>
+
+    <div class="popup__sync" id="syncIndicator" hidden>
+      <div class="popup__sync-track"><div class="popup__sync-bar"></div></div>
+      <span data-i18n="syncingLabel">Syncing database…</span>
+    </div>
+
+    <div class="popup__actions">
+      <button id="refreshBtn" type="button" data-i18n="refreshButton">Refresh database</button>
+      <button id="reportBtn" type="button" data-i18n="reportButton">Report missing product</button>
+    </div>
+
+    <footer class="popup__footer">
+      <a id="sourceLink" href="#" target="_blank" rel="noopener noreferrer" data-i18n="sourceLink">Data source repository</a>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

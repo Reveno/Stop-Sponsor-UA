@@ -1,0 +1,275 @@
+/* Spysok — warning badge & info card (rendered inside a
+   Shadow DOM, so this stylesheet only ever affects our own markup, never
+   the host page, and the host page's CSS can never reach in either).
+
+   Theming: colors are CSS custom properties on :host so light/dark/system
+   can be swapped by toggling a `data-theme` attribute on the shadow host
+   (set from chrome.storage settings in content.js) — no separate stylesheet
+   per theme. Font size scales the same way via `data-font-size`.
+
+   Palette: deep navy/charcoal for dark, clean off-white for light. Risk
+   accents are fixed across both themes (they're status colors, not brand
+   colors): crimson #B91C1C for high risk, amber #F59E0B for medium. */
+
+:host {
+  /* dark palette (default, and data-theme="dark") — deep navy/charcoal */
+  --im-bg-1: #1e293b;
+  --im-bg-2: #0f172a;
+  --im-card-bg: #111827;
+  --im-text: #f1f5f9;
+  --im-text-dim: #94a3b8;
+  --im-text-dimmer: #cbd5e1;
+  --im-heading: #ffffff;
+  --im-accent: #ef4444;
+  --im-accent-strong: #f87171;
+  --im-border: #334155;
+  --im-shadow: rgba(2, 6, 23, 0.5);
+  --im-font-scale: 1;
+}
+
+:host([data-theme='light']) {
+  /* clean off-white */
+  --im-bg-1: #ffffff;
+  --im-bg-2: #f8fafc;
+  --im-card-bg: #ffffff;
+  --im-text: #1e293b;
+  --im-text-dim: #64748b;
+  --im-text-dimmer: #475569;
+  --im-heading: #0f172a;
+  --im-accent: #b91c1c;
+  --im-accent-strong: #991b1b;
+  --im-border: #e2e8f0;
+  --im-shadow: rgba(15, 23, 42, 0.1);
+}
+
+@media (prefers-color-scheme: light) {
+  :host([data-theme='system']) {
+    --im-bg-1: #ffffff;
+    --im-bg-2: #f8fafc;
+    --im-card-bg: #ffffff;
+    --im-text: #1e293b;
+    --im-text-dim: #64748b;
+    --im-text-dimmer: #475569;
+    --im-heading: #0f172a;
+    --im-accent: #b91c1c;
+    --im-accent-strong: #991b1b;
+    --im-border: #e2e8f0;
+    --im-shadow: rgba(15, 23, 42, 0.1);
+  }
+}
+
+:host([data-font-size='small']) { --im-font-scale: 0.85; }
+:host([data-font-size='medium']) { --im-font-scale: 1; }
+:host([data-font-size='large']) { --im-font-scale: 1.2; }
+
+:host,
+.im-wrapper {
+  all: initial;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.im-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 4px 6px;
+  vertical-align: middle;
+  z-index: 2147483000;
+}
+
+/* Instagram post/profile: pinned to a corner of the post's own container
+   (position: absolute relative to it, not the viewport) so it scrolls
+   together with that specific post instead of sitting fixed on screen. */
+.im-wrapper--pinned {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  margin: 0;
+  z-index: 2147483000;
+}
+
+/* Last-resort fallback when no post container can be found at all: fixed
+   to the viewport corner, so the badge is never simply invisible. */
+.im-wrapper--fixed {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  margin: 0;
+  z-index: 2147483647;
+}
+
+.im-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--im-bg-1), var(--im-bg-2));
+  color: var(--im-text);
+  border: 1px solid var(--im-border);
+  border-radius: 6px;
+  padding: calc(4px * var(--im-font-scale)) calc(10px * var(--im-font-scale));
+  font-size: calc(12px * var(--im-font-scale));
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 1px 3px var(--im-shadow);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.im-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px var(--im-shadow);
+}
+
+.im-badge:focus-visible {
+  outline: 2px solid var(--im-accent-strong);
+  outline-offset: 2px;
+}
+
+/* Risk accents are intentionally the same crimson/amber/etc across both
+   themes — these are fixed status colors, not theme-adaptive brand colors. */
+.im-badge--high { color: #b91c1c; border-color: #b91c1c; }
+.im-badge--medium { color: #f59e0b; border-color: #f59e0b; }
+.im-badge--low { color: #ca8a04; border-color: #ca8a04; }
+.im-badge--unknown { color: #64748b; border-color: #64748b; }
+.im-badge--none { color: #10b981; border-color: #10b981; }
+
+:host([data-theme='dark']) .im-badge--high,
+:host([data-theme='dark']) .im-badge--medium,
+:host([data-theme='dark']) .im-badge--low {
+  /* lighter tints hold contrast against the dark navy background */
+  filter: brightness(1.15);
+}
+
+.im-card {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 300px;
+  max-width: 88vw;
+  background: var(--im-card-bg);
+  color: var(--im-text);
+  border: 1px solid var(--im-border);
+  border-radius: 12px;
+  padding: calc(14px * var(--im-font-scale)) calc(16px * var(--im-font-scale));
+  font-size: calc(13px * var(--im-font-scale));
+  line-height: 1.5;
+  box-shadow: 0 16px 40px var(--im-shadow), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  z-index: 2147483001;
+  /* Hover-triggered, so this fades rather than snapping open/closed — but
+     it must stay unreachable (no pointer events, no hit-testing) and
+     invisible to a11y tools while closed, which `display: none` would
+     give for free but can't be transitioned. `visibility` does both: it's
+     instant going to `visible` (so opening never has a delay) but delayed
+     going to `hidden` via its own transition (so it only disappears from
+     hit-testing/AT *after* the opacity fade finishes, not before). */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+}
+
+.im-card--open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0s;
+}
+
+/* Edge-of-viewport flips (see positionCardInViewport in content.js) — the
+   card would otherwise render partly off-screen for a badge near the
+   right or bottom edge of the window. */
+.im-card--align-right {
+  left: auto;
+  right: 0;
+}
+
+.im-card--flip-up {
+  top: auto;
+  bottom: calc(100% + 8px);
+}
+
+.im-wrapper--fixed .im-card {
+  top: auto;
+  bottom: calc(100% + 8px);
+  left: auto;
+  right: 0;
+}
+
+.im-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--im-border);
+}
+
+.im-card__corp {
+  font-weight: 700;
+  font-size: calc(14px * var(--im-font-scale));
+  color: var(--im-heading);
+}
+
+.im-card__status {
+  font-size: calc(10px * var(--im-font-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Risk-driven (see riskClassFor() in content.js), not raw-status-driven:
+   Crimson for high risk/active propaganda, amber for medium, a duller
+   gold for low, green for exited ("none"), grey ONLY as the unknown
+   fallback. */
+.im-card__status--high { background: rgba(185, 28, 28, 0.14); color: #b91c1c; }
+.im-card__status--medium { background: rgba(245, 158, 11, 0.16); color: #b45309; }
+.im-card__status--low { background: rgba(202, 138, 4, 0.14); color: #ca8a04; }
+.im-card__status--none { background: rgba(16, 185, 129, 0.16); color: #0f9d70; }
+.im-card__status--unknown { background: rgba(100, 116, 139, 0.16); color: #64748b; }
+
+.im-card__brand {
+  margin: 0 0 6px;
+  color: var(--im-text-dim);
+}
+
+.im-card__brand strong {
+  color: var(--im-heading);
+}
+
+.im-card__propaganda {
+  margin: 0 0 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(185, 28, 28, 0.1);
+  border: 1px solid rgba(185, 28, 28, 0.3);
+  color: #b91c1c;
+  font-weight: 600;
+  font-size: calc(11px * var(--im-font-scale));
+  line-height: 1.4;
+}
+
+.im-card__propaganda--ru {
+  border-style: dashed;
+}
+
+.im-card__info {
+  margin: 0 0 10px;
+  color: var(--im-text-dimmer);
+}
+
+.im-card__links a {
+  color: var(--im-accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: calc(12px * var(--im-font-scale));
+  transition: color 0.15s ease;
+}
+
+.im-card__links a:hover {
+  color: var(--im-accent-strong);
+  text-decoration: underline;
+}

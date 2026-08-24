@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<title>Spysok — Settings</title>
+<link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="bg-blobs" aria-hidden="true"></div>
+
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <img src="icons/icon48.png" alt="" class="sidebar__logo" />
+        <span class="sidebar__name" data-i18n="extName">Spysok</span>
+      </div>
+
+      <nav class="sidebar__nav" id="sidebarNav">
+        <button type="button" class="sidebar__nav-item is-active" data-section="general">
+          <span class="sidebar__nav-icon" aria-hidden="true">⚙</span>
+          <span data-i18n="navGeneral">General</span>
+        </button>
+        <button type="button" class="sidebar__nav-item" data-section="catalog">
+          <span class="sidebar__nav-icon" aria-hidden="true">▦</span>
+          <span data-i18n="navCatalog">The Catalog</span>
+        </button>
+        <button type="button" class="sidebar__nav-item" data-section="transparency">
+          <span class="sidebar__nav-icon" aria-hidden="true">◈</span>
+          <span data-i18n="navTransparency">Data Transparency</span>
+        </button>
+        <button type="button" class="sidebar__nav-item" data-section="how-it-works">
+          <span class="sidebar__nav-icon" aria-hidden="true">?</span>
+          <span data-i18n="navHowItWorks">How It Works</span>
+        </button>
+        <button type="button" class="sidebar__nav-item" data-section="site-list">
+          <span class="sidebar__nav-icon" aria-hidden="true">▤</span>
+          <span data-i18n="navSiteList">Site List</span>
+        </button>
+      </nav>
+
+      <div class="sidebar__save">
+        <button type="button" id="saveBtn" class="btn btn--primary sidebar__save-btn" data-i18n="saveButton">Save</button>
+        <span id="savedNotice" class="saved-notice" hidden data-i18n="savedNotice">Saved</span>
+      </div>
+
+      <p class="sidebar__privacy" data-i18n="privacyNote">
+        Spysok does not collect, transmit, or store any of your browsing activity.
+      </p>
+    </aside>
+
+    <main class="content">
+      <!-- General -->
+      <section class="panel" data-panel="general">
+        <h1 data-i18n="sectionAppearance">Appearance</h1>
+
+        <div class="grid-2col">
+          <div class="card glass">
+            <div class="field">
+              <label data-i18n="labelTheme">Theme</label>
+              <div class="segmented" id="themeSegmented">
+                <button type="button" data-value="light" data-i18n="themeLight">Light</button>
+                <button type="button" data-value="dark" data-i18n="themeDark">Dark</button>
+                <button type="button" data-value="system" data-i18n="themeSystem">System</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label data-i18n="labelFontSize">Badge text size</label>
+              <div class="segmented" id="fontSizeSegmented">
+                <button type="button" data-value="small" data-i18n="fontSmall">Small</button>
+                <button type="button" data-value="medium" data-i18n="fontMedium">Medium</button>
+                <button type="button" data-value="large" data-i18n="fontLarge">Large</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label data-i18n="labelBadgeStyle">Badge style</label>
+              <div class="segmented" id="badgeStyleSegmented">
+                <button type="button" data-value="full" data-i18n="badgeStyleFull">Icon + text</button>
+                <button type="button" data-value="icon" data-i18n="badgeStyleIcon">Icon only</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card glass preview-card">
+            <span class="preview-card__label" data-i18n="labelPreview">Live preview</span>
+            <p class="field__hint" data-i18n="previewHint">Updates instantly as you change settings on this page.</p>
+            <div class="preview-card__stage">
+              <div id="badgePreviewHost"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The Catalog -->
+      <section class="panel" data-panel="catalog" hidden>
+        <h1 data-i18n="catalogTitle">The Catalog</h1>
+        <p class="panel__intro" data-i18n="catalogIntro">
+          Every brand in the database, searchable and filterable. Each entry links to its source.
+        </p>
+
+        <div class="catalog-toolbar">
+          <input type="search" id="catalogSearch" class="catalog-search" data-i18n-placeholder="catalogSearchPlaceholder" placeholder="Search brand or company…" />
+          <select id="catalogStatusFilter" class="catalog-filter">
+            <option value="" data-i18n="catalogFilterAll">All statuses</option>
+            <option value="stay" data-i18n="statusStay">Still operating in Russia</option>
+            <option value="reduced" data-i18n="statusReduced">Reduced presence</option>
+            <option value="left" data-i18n="statusLeft">Exited Russia</option>
+          </select>
+          <button type="button" id="bulkUpdateBtn" class="btn btn--secondary" data-i18n="bulkUpdateButton">⭯ Bulk Update</button>
+          <button type="button" id="clearCacheBtn" class="btn btn--secondary" data-i18n="clearCacheButton" title="Debug: wipe the cached database and reload from the bundled data/brands.json">🗑 Clear Cache &amp; Reset</button>
+        </div>
+
+        <p class="catalog-count">
+          <span id="catalogCount"></span>
+          <span class="catalog-sync" id="catalogSyncIndicator" hidden>
+            <span class="catalog-sync-track"><span class="catalog-sync-bar"></span></span>
+            <span data-i18n="syncingLabel">Syncing database…</span>
+          </span>
+        </p>
+
+        <div class="catalog-grid" id="catalogGrid"></div>
+      </section>
+
+      <!-- Data Transparency -->
+      <section class="panel" data-panel="transparency" hidden>
+        <h1 data-i18n="transparencyTitle">Data Transparency</h1>
+        <p class="panel__intro" data-i18n="transparencyIntro">
+          Every claim this extension makes traces back to a public, independently-checkable source.
+        </p>
+
+        <div class="card glass">
+          <h2 data-i18n="transparencyPipelineTitle">The pipeline</h2>
+          <ol class="pipeline-list">
+            <li data-i18n="transparencyPipelineStep1">KSE Leave-Russia sources status and figures.</li>
+            <li data-i18n="transparencyPipelineStep2">Wikidata sources sub-brand relationships.</li>
+            <li data-i18n="transparencyPipelineStep3">Every entry links back to its source.</li>
+          </ol>
+        </div>
+
+        <h2 data-i18n="transparencySourcesTitle">Sources</h2>
+        <div class="grid-2col grid-3col">
+          <a class="card glass source-card" href="https://leave-russia.org" target="_blank" rel="noopener noreferrer">
+            <span class="source-card__icon" aria-hidden="true">📊</span>
+            <strong data-i18n="transparencyKseName">KSE Leave-Russia</strong>
+            <p data-i18n="transparencyKseDesc">Kyiv School of Economics tracker.</p>
+            <span class="source-card__link">leave-russia.org →</span>
+          </a>
+          <a class="card glass source-card" href="https://en.wikipedia.org/wiki/International_Sponsors_of_War" target="_blank" rel="noopener noreferrer">
+            <span class="source-card__icon" aria-hidden="true">🏛️</span>
+            <strong data-i18n="transparencyNacpName">NACP</strong>
+            <p data-i18n="transparencyNacpDesc">Ukraine's National Agency on Corruption Prevention.</p>
+            <span class="source-card__link">en.wikipedia.org/wiki/International_Sponsors_of_War →</span>
+          </a>
+          <a class="card glass source-card" href="https://www.wikidata.org" target="_blank" rel="noopener noreferrer">
+            <span class="source-card__icon" aria-hidden="true">🌐</span>
+            <strong data-i18n="transparencyWikidataName">Wikidata</strong>
+            <p data-i18n="transparencyWikidataDesc">Structured knowledge base for ownership data.</p>
+            <span class="source-card__link">wikidata.org →</span>
+          </a>
+        </div>
+
+        <h2 data-i18n="transparencyExportTitle">Export the database</h2>
+        <p class="panel__intro" data-i18n="transparencyExportDesc">Download the full dataset to inspect, audit, or reuse elsewhere.</p>
+        <div class="export-actions">
+          <button type="button" id="exportJsonBtn" class="btn btn--secondary" data-i18n="exportJsonButton">Export JSON</button>
+          <button type="button" id="exportCsvBtn" class="btn btn--secondary" data-i18n="exportCsvButton">Export CSV</button>
+        </div>
+      </section>
+
+      <!-- How It Works -->
+      <section class="panel" data-panel="how-it-works" hidden>
+        <h1 data-i18n="howItWorksTitle">How It Works</h1>
+        <p class="panel__intro" data-i18n="howItWorksIntro">What the badge you see on a product actually means.</p>
+
+        <div class="grid-2col steps-grid">
+          <div class="card glass step-card">
+            <span class="step-card__num">1</span>
+            <h3 data-i18n="howItWorksStep1Title">Detect</h3>
+            <p data-i18n="howItWorksStep1Desc">The page is scanned for product/brand names.</p>
+          </div>
+          <div class="card glass step-card">
+            <span class="step-card__num">2</span>
+            <h3 data-i18n="howItWorksStep2Title">Match</h3>
+            <p data-i18n="howItWorksStep2Desc">The brand is matched to its parent corporation.</p>
+          </div>
+          <div class="card glass step-card">
+            <span class="step-card__num">3</span>
+            <h3 data-i18n="howItWorksStep3Title">Look up</h3>
+            <p data-i18n="howItWorksStep3Desc">If sourced as active in Russia, a badge appears.</p>
+          </div>
+          <div class="card glass step-card">
+            <span class="step-card__num">4</span>
+            <h3 data-i18n="howItWorksStep4Title">Decide</h3>
+            <p data-i18n="howItWorksStep4Desc">The extension flags — it doesn't decide for you.</p>
+          </div>
+        </div>
+
+        <h2 data-i18n="howItWorksLegendTitle">Badge colors</h2>
+        <ul class="legend">
+          <li><span class="legend-dot legend-dot--high"></span><span data-i18n="legendHigh">High risk</span></li>
+          <li><span class="legend-dot legend-dot--medium"></span><span data-i18n="legendMedium">Medium risk</span></li>
+          <li><span class="legend-dot legend-dot--low"></span><span data-i18n="legendLow">Low risk</span></li>
+          <li><span class="legend-dot legend-dot--left"></span><span data-i18n="legendLeft">Left Russia</span></li>
+          <li><span class="legend-dot legend-dot--unknown"></span><span data-i18n="legendUnknown">Unknown</span></li>
+        </ul>
+      </section>
+
+      <!-- Site List -->
+      <section class="panel" data-panel="site-list" hidden>
+        <h1 data-i18n="sectionDomains">Site list</h1>
+        <p class="panel__intro" data-i18n="domainListHint">
+          Choose whether the list below is sites to skip, or the only sites to run on.
+        </p>
+
+        <div class="card glass">
+          <div class="field">
+            <label data-i18n="labelDomainMode">Mode</label>
+            <div class="segmented" id="domainModeSegmented">
+              <button type="button" data-value="blacklist" data-i18n="domainModeBlacklist">Skip these sites</button>
+              <button type="button" data-value="whitelist" data-i18n="domainModeWhitelist">Only these sites</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="domainListInput" data-i18n="labelDomainList">Domains (one per line)</label>
+            <textarea id="domainListInput" rows="6" placeholder="example.com&#10;shop.example.ua"></textarea>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <button type="button" id="feedbackFab" class="feedback-fab">
+    <span aria-hidden="true">💬</span> <span data-i18n="feedbackButton">Feedback</span>
+  </button>
+
+  <div class="modal-overlay" id="catalogModalOverlay">
+    <div class="modal" id="catalogModal" role="dialog" aria-modal="true" aria-labelledby="modalBrand">
+      <button type="button" class="modal__close" id="catalogModalClose" aria-label="Close">✕</button>
+      <div class="modal__header">
+        <h2 class="modal__brand" id="modalBrand"></h2>
+        <p class="modal__corp" id="modalCorp"></p>
+        <div class="modal__badges" id="modalBadges"></div>
+      </div>
+      <div class="modal__body">
+        <div class="modal__figures" id="modalFigures" hidden></div>
+        <div class="modal__desc" id="modalDesc"></div>
+      </div>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--secondary" id="modalCopyBtn" data-i18n="catalogCopyLink">Copy link</button>
+        <a class="btn btn--primary" id="modalVisitBtn" href="#" target="_blank" rel="noopener noreferrer" data-i18n="catalogViewProof">View proof →</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

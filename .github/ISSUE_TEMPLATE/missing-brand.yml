@@ -1,0 +1,46 @@
+name: Missing brand or product
+description: Report a brand/product that should be flagged but isn't (or a false positive)
+title: "[Missing Brand]: "
+labels: ["missing-brand"]
+body:
+  - type: input
+    id: brand-name
+    attributes:
+      label: Brand name
+      placeholder: e.g. Milka
+    validations:
+      required: true
+  - type: input
+    id: parent-company
+    attributes:
+      label: Parent company (if known)
+      placeholder: e.g. Mondelez International
+  - type: input
+    id: product-url
+    attributes:
+      label: Product page URL where this was seen
+      placeholder: https://...
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source for parent company / Russia-operations status
+      description: A link to KSE Leave-Russia, Wikidata, NACP, or another independently-checkable source. Reports without a source take longer to act on.
+      placeholder: https://leave-russia.org/...
+    validations:
+      required: true
+  - type: dropdown
+    id: report-type
+    attributes:
+      label: What's wrong?
+      options:
+        - Brand is missing from the database (false negative)
+        - Brand is incorrectly flagged (false positive)
+        - Status/figures for an existing entry are out of date
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
